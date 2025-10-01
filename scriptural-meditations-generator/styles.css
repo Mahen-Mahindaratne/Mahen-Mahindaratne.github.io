@@ -1,0 +1,114 @@
+/* Scriptural Meditation Generator - High Contrast Glassmorphism */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('light-5315917_1280.jpg'); 
+  background-size: cover;
+  background-position: center;
+  font-family: 'Cinzel', serif;
+  color: #ffffff; /* crisp white */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page-header h1 {
+  font-size: 2.2rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 3px 3px 8px rgba(0,0,0,1); /* darker, stronger shadow */
+}
+
+.quote-container {
+  width: 80%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.quote-wrap {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.quote {
+  font-size: 26px;
+  line-height: 1.6;
+  text-align: center;
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+  color: #ffffff; /* pure white text */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 1); /* deep shadow for maximum contrast */
+  visibility: hidden; 
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.quote.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.author-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #A88D37; /* stronger, vivid gold */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.divider {
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 215, 0, 0.95), transparent);
+  margin: 15px auto;
+}
+
+
+.name.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.footer {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 13px;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,1); /* make footer readable too */
+  opacity: 0.8;
+  z-index: 10;
+}
