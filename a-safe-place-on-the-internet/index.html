@@ -147,6 +147,17 @@
             text-decoration: underline;
         }
 
+        .copyright {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -164,6 +175,15 @@
                 position: relative;
                 bottom: auto;
                 right: auto;
+                margin-top: 20px;
+                text-align: center;
+                width: 90%;
+            }
+
+            .copyright {
+                position: relative;
+                bottom: auto;
+                left: auto;
                 margin-top: 20px;
                 text-align: center;
                 width: 90%;
@@ -188,6 +208,10 @@
 
     <div class="attribution">
         Animated background from GIPHY
+    </div>
+
+    <div class="copyright">
+        &copy; 2024 Mahen Mahindaratne | All rights reserved.
     </div>
 
     <script>
