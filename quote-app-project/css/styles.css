@@ -20,7 +20,7 @@ body::before {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('./assets/images/background_image.jpg');
+    background-image: url('/assets/images/background_image.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -32,7 +32,7 @@ body::before {
 @media (max-width: 768px) {
     body::before {
         background-attachment: scroll;
-        background-image: url('./assets/images/background_image.jpg');
+        background-image: url('/assets/images/background_image.jpg');
     }
 }
 

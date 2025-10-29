@@ -31,9 +31,8 @@ body {
 }
 
 /* Roman theme background - NO OVERLAY */
-/* Roman theme background - NO OVERLAY */
 body.theme-roman {
-    background-image: url('../assets/images/roman-bg.jpg');
+    background-image: url('assets/images/roman-bg.jpg');
     background-color: #8B4513;
     background-size: cover;
     background-position: center;
@@ -43,7 +42,7 @@ body.theme-roman {
 
 /* Tomb Raider theme background - NO OVERLAY */
 body.theme-tomb-raider {
-    background-image: url('../assets/images/tomb-raider-bg.jpg');
+    background-image: url('assets/images/tomb-raider-bg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
