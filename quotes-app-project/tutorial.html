@@ -323,7 +323,7 @@ function startAutoQuote() {
     }
     
     autoInterval = setInterval(displayRandomQuote, 8000);
-    autoToggleBtn.innerHTML = '&lt;span&gt;⏸️&lt;/span&gt; Pause Auto';
+    autoToggleBtn.innerHTML = '<span>⏸️</span> Pause Auto';
     isAutoEnabled = true;
 }
 
@@ -335,7 +335,7 @@ function toggleAutoQuote() {
             clearInterval(autoInterval);
             autoInterval = null;
         }
-        autoToggleBtn.innerHTML = '&lt;span&gt;▶️&lt;/span&gt; Resume Auto';
+        autoToggleBtn.innerHTML = '<span>▶️</span> Resume Auto';
         isAutoEnabled = false;
     } else {
         // Resume auto rotation
@@ -347,6 +347,78 @@ function toggleAutoQuote() {
 function updateUI() {
     totalQuotesSpan.textContent = currentQuotes.length;
     currentThemeSpan.textContent = currentTheme === 'roman' ? 'Roman' : 'Tomb Raider';
+}
+
+// Show loading overlay
+function showLoading() {
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'flex';
+    }
+}
+
+// Hide loading overlay
+function hideLoading() {
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'none';
+    }
+}
+
+// Disable buttons during loading
+function disableButtons() {
+    const buttons = [romanThemeBtn, tombRaiderThemeBtn, newQuoteBtn, autoToggleBtn];
+    buttons.forEach(button => {
+        if (button) {
+            button.disabled = true;
+            button.style.opacity = '0.6';
+        }
+    });
+}
+
+// Enable buttons after loading
+function enableButtons() {
+    const buttons = [romanThemeBtn, tombRaiderThemeBtn, newQuoteBtn, autoToggleBtn];
+    buttons.forEach(button => {
+        if (button) {
+            button.disabled = false;
+            button.style.opacity = '1';
+        }
+    });
+}
+
+// Show error message
+function showError(message) {
+    console.error(message);
+    // You could implement a more user-friendly error display here
+    // For now, we'll just log to console and use fallback
+}
+
+// Load fallback quotes if JSON files fail
+function loadFallbackQuotes(theme) {
+    const fallbackQuotes = {
+        'roman': [
+            {
+                content: "Fortune favors the bold.",
+                author: "Virgil"
+            }
+        ],
+        'tomb-raider': [
+            {
+                content: "A famous explorer once said that the extraordinary is in what we do, not who we are.",
+                author: "Lara Croft",
+                game: "Tomb Raider"
+            }
+        ]
+    };
+    
+    currentQuotes = fallbackQuotes[theme] || fallbackQuotes.roman;
+    updateUI();
+    displayRandomQuote();
+    hideLoading();
+    enableButtons();
+    
+    if (isAutoEnabled && !autoInterval) {
+        startAutoQuote();
+    }
 }</code></pre>
             </div>
         </div>
@@ -356,42 +428,317 @@ function updateUI() {
             <p>The CSS uses CSS variables for theming and includes responsive design:</p>
             <div class="code-block">
 <pre><code>:root {
+    /* Roman Theme Colors */
     --roman-primary: #C4A86F;
     --roman-secondary: #8B4513;
+    --roman-accent: #D4B483;
+    --roman-dark: #1a0f08;
+    --roman-bg: #2d1f14;
+    
+    /* Tomb Raider Theme Colors */
     --tomb-raider-primary: #4AA8A8;
     --tomb-raider-secondary: #2F8D8D;
+    --tomb-raider-accent: #6BC4C4;
+    --tomb-raider-dark: #0a1a1a;
+    --tomb-raider-bg: #1a2e2e;
+    
+    /* Common Colors */
     --text-light: #F5F5DC;
+    --text-muted: #d4c9a9;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --overlay: rgba(15, 12, 10, 0.92);
+    
+    /* Animations */
+    --transition-fast: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    --glow-intensity: 0.6;
+}
+
+/* Enhanced Theme Buttons */
+.theme-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    box-shadow: 0 4px 12px var(--shadow);
+    border: none !important;
+}
+
+.theme-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left var(--transition-slow);
+}
+
+.theme-btn:hover::before {
+    left: 100%;
 }
 
 .theme-btn.roman {
     background: linear-gradient(135deg, var(--roman-primary) 0%, var(--roman-secondary) 100%);
-    color: #1a0f08;
+    color: var(--roman-dark);
     border: 1px solid rgba(196, 168, 111, 0.5);
+}
+
+.theme-btn.roman:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 20px var(--shadow),
+        0 0 20px rgba(196, 168, 111, 0.4);
+}
+
+.theme-btn.roman.active {
+    background: linear-gradient(135deg, var(--roman-accent) 0%, var(--roman-primary) 100%);
+    box-shadow: 
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        0 0 20px rgba(196, 168, 111, 0.6);
 }
 
 .theme-btn.tomb-raider {
     background: linear-gradient(135deg, var(--tomb-raider-primary) 0%, var(--tomb-raider-secondary) 100%);
-    color: #0a1a1a;
+    color: var(--tomb-raider-dark);
     border: 1px solid rgba(74, 168, 168, 0.5);
 }
 
+.theme-btn.tomb-raider:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 20px var(--shadow),
+        0 0 20px rgba(74, 168, 168, 0.4);
+}
+
+.theme-btn.tomb-raider.active {
+    background: linear-gradient(135deg, var(--tomb-raider-accent) 0%, var(--tomb-raider-primary) 100%);
+    box-shadow: 
+        inset 0 2px 4px rgba(255,255,255,0.3),
+        0 0 20px rgba(74, 168, 168, 0.6);
+}
+
+/* Enhanced Quote Container */
 .quote-container {
-    background: rgba(15, 12, 10, 0.85);
-    backdrop-filter: blur(12px);
-    border-radius: 15px;
-    padding: 40px;
-    min-height: 300px;
+    background: var(--overlay);
+    backdrop-filter: blur(16px) saturate(180%);
+    border-radius: 20px;
+    padding: 50px 40px;
+    min-height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.quote-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.7;
 }
 
 body.theme-roman .quote-container {
-    border: 2px solid rgba(196, 168, 111, 0.5);
+    border: 2px solid rgba(196, 168, 111, 0.3);
+    background: linear-gradient(145deg, rgba(15, 12, 10, 0.92), rgba(45, 31, 20, 0.95));
+}
+
+body.theme-roman .quote-container::before {
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--roman-primary), 
+        var(--roman-secondary), 
+        var(--roman-primary), 
+        transparent
+    );
 }
 
 body.theme-tomb-raider .quote-container {
-    border: 2px solid rgba(74, 168, 168, 0.5);
+    border: 2px solid rgba(74, 168, 168, 0.3);
+    background: linear-gradient(145deg, rgba(15, 12, 10, 0.92), rgba(26, 46, 46, 0.95));
+}
+
+body.theme-tomb-raider .quote-container::before {
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--tomb-raider-primary), 
+        var(--tomb-raider-secondary), 
+        var(--tomb-raider-primary), 
+        transparent
+    );
+}
+
+/* Enhanced Body Themes */
+body.theme-roman {
+    background: linear-gradient(135deg, var(--roman-bg) 0%, #3a291a 50%, var(--roman-dark) 100%);
+    color: var(--text-light);
+}
+
+body.theme-tomb-raider {
+    background: linear-gradient(135deg, var(--tomb-raider-bg) 0%, #2a4444 50%, var(--tomb-raider-dark) 100%);
+    color: var(--text-light);
+}
+
+/* Quote Text Enhancements */
+.quote-text {
+    font-size: 1.4em;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+    padding: 0 20px;
+}
+
+.quote-text::before,
+.quote-text::after {
+    content: '"';
+    position: absolute;
+    font-size: 3em;
+    opacity: 0.3;
+    color: currentColor;
+}
+
+.quote-text::before {
+    top: -20px;
+    left: -10px;
+}
+
+.quote-text::after {
+    bottom: -40px;
+    right: -10px;
+}
+
+.quote-author {
+    font-size: 1.1em;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    text-align: right;
+    position: relative;
+    padding-right: 20px;
+}
+
+.quote-author::before {
+    content: '—';
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+.quote-game {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    text-align: right;
+    font-weight: 300;
+    opacity: 0.8;
+    padding-right: 20px;
+}
+
+/* Enhanced Fade Animations */
+.fade-in {
+    animation: enhancedFadeIn 0.8s var(--transition-slow) both;
+}
+
+@keyframes enhancedFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Control Buttons Enhancement */
+.control-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-light);
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Stats Display Enhancement */
+.stats {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 15px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quote-container {
+        padding: 30px 20px;
+        min-height: 300px;
+        border-radius: 15px;
+    }
+    
+    .quote-text {
+        font-size: 1.2em;
+        padding: 0 15px;
+    }
+    
+    .theme-btn {
+        font-size: 0.8em;
+        padding: 10px 15px;
+    }
+}
+
+/* Loading Animation */
+.loading-overlay {
+    background: var(--overlay);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+body.theme-roman .loading-spinner {
+    color: var(--roman-primary);
+}
+
+body.theme-tomb-raider .loading-spinner {
+    color: var(--tomb-raider-primary);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Selection Colors */
+::selection {
+    background: rgba(196, 168, 111, 0.3);
+}
+
+body.theme-tomb-raider ::selection {
+    background: rgba(74, 168, 168, 0.3);
 }</code></pre>
             </div>
         </div>
