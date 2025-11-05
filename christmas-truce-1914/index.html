@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Christmas Truce of 1914</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background: #0a1f1c;
+            color: #f5f5f5;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(10, 31, 28, 0.40), rgba(5, 15, 14, 0.3)), 
+                url('1920px-Illustrated_London_News_-_Christmas_Truce_1914.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #e8c39e;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #c9a87a;
+        }
+
+        .tiles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .tile {
+            background: rgba(30, 60, 55, 0.7);
+            border: 1px solid #8B4513;
+            border-radius: 8px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+            background: rgba(40, 80, 70, 0.8);
+        }
+
+        .tile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .tile-icon {
+            font-size: 1.8rem;
+            margin-right: 1rem;
+            color: #c9a87a;
+        }
+
+        .tile-title {
+            font-size: 1.3rem;
+            color: #e8c39e;
+        }
+
+        .tile-content {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #e0e0e0;
+        }
+
+        .tile.active {
+            background: rgba(50, 100, 90, 0.9);
+            border-color: #daa520;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #1e3c37;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid #8B4513;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #8B4513;
+            padding-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: #e8c39e;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #c9a87a;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            line-height: 1.6;
+        }
+
+        .quote {
+            font-style: italic;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-left: 3px solid #8B4513;
+            background: rgba(139, 69, 19, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #e8c39e;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(139, 69, 19, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .tiles-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background"></div>
+    
+    <div class="container">
+        <header>
+            <h1>The Christmas Truce of 1914</h1>
+            <p class="subtitle">When enemies became friends for a day</p>
+        </header>
+        
+        <div class="tiles-container" id="tilesContainer">
+            <!-- Tiles will be populated by JavaScript -->
+        </div>
+        
+        <footer>
+            <p>Historical accounts from the Western Front, December 1914</p>
+        </footer>
+    </div>
+    
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Modal Title</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data for the interactive tiles
+        const tileData = [
+            {
+                id: 1,
+                title: "The Context",
+                icon: "⚔️",
+                content: "By December 1914, World War I had been raging for five months. Soldiers on both sides were entrenched in a brutal stalemate along the Western Front.",
+                modalContent: `
+                    <p>By December 1914, World War I had been raging for five months with unprecedented violence. The early war of movement had settled into a brutal stalemate along the Western Front, with soldiers on both sides digging elaborate trench systems that stretched from the North Sea to the Swiss border.</p>
+                    <p>The front lines were sometimes only 30-70 yards apart in places, close enough for soldiers to hear conversations from the opposing trenches. The conditions were horrific - freezing mud, rats, lice, and the constant threat of sniper fire and artillery shells.</p>
+                    <p>Despite the official propaganda depicting the enemy as monsters, many soldiers had begun to recognize their opponents as ordinary men facing the same hardships.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Christmas Eve",
+                icon: "🎄",
+                content: "On December 24th, German soldiers began decorating their trenches with Christmas trees and candles.",
+                modalContent: `
+                    <p>As darkness fell on Christmas Eve 1914, something remarkable began to happen along sections of the Western Front. German soldiers, many of whom had received Christmas trees and care packages from home, began placing small Christmas trees decorated with candles along the parapets of their trenches.</p>
+                    <p>Soon, the sound of Christmas carols began drifting across No Man's Land. German troops sang "Stille Nacht" (Silent Night), while British soldiers responded with English carols like "The First Noel."</p>
+                    <div class="quote">
+                        "First the Germans would sing one of their carols and then we would sing one of ours, until when we started up 'O Come, All Ye Faithful' the Germans immediately joined in singing the same hymn to the Latin words 'Adeste Fideles'. And I thought, well, this is really a most extraordinary thing - two nations both singing the same carol in the middle of a war."<br>- British Officer, 1914
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                title: "The Truce Begins",
+                icon: "🤝",
+                content: "Soldiers cautiously emerged from their trenches, meeting in No Man's Land to exchange gifts and greetings.",
+                modalContent: `
+                    <p>On Christmas morning, tentative signs of peace emerged. In some sectors, soldiers waved white flags or held up signs reading "You no shoot, we no shoot." Gradually, men began to cautiously emerge from their trenches and venture into No Man's Land - the deadly ground between opposing forces.</p>
+                    <p>What began as cautious gestures soon turned into widespread fraternization. German, British, and French soldiers met in the middle, shaking hands, exchanging gifts of cigarettes, food, and souvenirs like buttons and caps.</p>
+                    <p>Many soldiers who had been barbers in civilian life offered haircuts. Some Germans who had worked in England before the war acted as interpreters, facilitating conversations between the enemies-turned-friends.</p>
+                    <div class="quote">
+                        "We shook hands, wished each other a Merry Christmas, and were soon conversing as if we had known each other for years. We were in front of their wire entanglements and surrounded by Germans - Fritz and I in the center talking, and several other Germans and Englishmen... We exchanged cigarettes and showed each other family photographs. We must have been there for over an hour."<br>- British soldier's letter home
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                title: "The Football Match",
+                icon: "⚽",
+                content: "In several locations along the front, impromptu football matches were played between opposing forces.",
+                modalContent: `
+                    <p>One of the most legendary aspects of the Christmas Truce was the football matches played in No Man's Land. While accounts vary on the specifics, multiple reports confirm that impromptu soccer games did occur between British and German soldiers.</p>
+                    <p>Using makeshift balls (sometimes ration tins or straw bundles), soldiers organized matches in the frozen fields between trenches. The games were informal, with rules made up on the spot and goals marked by caps or articles of clothing.</p>
+                    <p>These football matches represented a remarkable moment of shared humanity - enemies who hours before had been trying to kill each other were now playing games together, laughing and cheering as if they were old friends.</p>
+                    <div class="quote">
+                        "The ground was not in the best condition for football, being frozen solid and covered with snow, but that did not deter the players. We used a ball one of our boys had been given for Christmas, and the Germans produced one too. We had a proper match with them, and they beat us 3-2."<br>- Account from a British soldier
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                title: "Burying the Dead",
+                icon: "⚰️",
+                content: "Both sides worked together to retrieve and bury their fallen comrades who had been lying in No Man's Land.",
+                modalContent: `
+                    <p>One of the most solemn and practical activities during the truce was the joint burial of the dead. For weeks, the bodies of soldiers killed in previous attacks had been lying in No Man's Land, impossible to retrieve under normal circumstances due to sniper fire.</p>
+                    <p>During the truce, both British and German soldiers worked together to collect their fallen comrades. Joint burial services were held, with soldiers from both sides standing together in respect as chaplains read prayers in English and German.</p>
+                    <p>This shared act of humanity demonstrated a mutual recognition of the value of every human life, regardless of nationality or which side of the war they fought on.</p>
+                    <div class="quote">
+                        "The Germans brought the body of a English officer to the halfway line. We had a service for him, with our chaplain and their chaplain working together. It was an extraordinary sight - enemies standing side by side, bareheaded, paying their respects to a fallen warrior."<br>- British officer's account
+                    </div>
+                `
+            },
+            {
+                id: 6,
+                title: "The Aftermath",
+                icon: "🕊️",
+                content: "The truce gradually ended as orders came from high command to resume hostilities.",
+                modalContent: `
+                    <p>The Christmas Truce could not last forever. As December 26th dawned, in most sectors the fraternization gradually ended. In some places, the truce extended for several days, with soldiers reportedly reluctant to resume fighting against men they had come to know as human beings.</p>
+                    <p>High command on both sides was furious when they learned of the widespread truce. Stern orders were issued forbidding fraternization with the enemy, with threats of court-martial for disobedience. Artillery barrages were ordered in some sectors to ensure hostilities resumed.</p>
+                    <p>While there were isolated truces in subsequent Christmases of the war, nothing on the scale of 1914 occurred again. The military leadership made sure of that by ordering artillery bombardments on Christmas Eve and rotating units to prevent familiarity.</p>
+                    <div class="quote">
+                        "For the rest of the day, not a shot was fired. The next day, we received orders from headquarters to resume firing. We told them we couldn't, as we knew those men. They sent us to a different part of the line where we didn't know the Germans opposite."<br>- British soldier's recollection
+                    </div>
+                `
+            }
+        ];
+
+        // DOM elements
+        const tilesContainer = document.getElementById('tilesContainer');
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const closeModal = document.getElementById('closeModal');
+
+        // Populate tiles
+        tileData.forEach(tile => {
+            const tileElement = document.createElement('div');
+            tileElement.className = 'tile';
+            tileElement.innerHTML = `
+                <div class="tile-header">
+                    <span class="tile-icon">${tile.icon}</span>
+                    <h3 class="tile-title">${tile.title}</h3>
+                </div>
+                <div class="tile-content">
+                    ${tile.content}
+                </div>
+            `;
+            
+            tileElement.addEventListener('click', () => {
+                openModal(tile);
+            });
+            
+            tilesContainer.appendChild(tileElement);
+        });
+
+        // Modal functions
+        function openModal(tile) {
+            modalTitle.textContent = tile.title;
+            modalBody.innerHTML = tile.modalContent;
+            modal.style.display = 'flex';
+        }
+
+        function closeModalFunc() {
+            modal.style.display = 'none';
+        }
+
+        // Event listeners
+        closeModal.addEventListener('click', closeModalFunc);
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+    </script>
+</body>
+</html>
