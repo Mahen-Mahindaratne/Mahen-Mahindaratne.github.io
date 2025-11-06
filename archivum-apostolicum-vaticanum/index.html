@@ -1,1 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivum Apostolicum Vaticanum - Digital Access Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gold: #c9a87a;
+            --dark-brown: #1a0f07;
+            --medium-brown: #2a1a0f;
+            --light-gold: #e9d6b6;
+            --error-gold: #d4af37;
+            --success-green: #4a7c59;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            color: var(--primary-gold);
+            background-color: var(--dark-brown);
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+        
+        /* Left Pane - Background Image */
+        .background-pane {
+            flex: 1.5;
+            background-image: url('clouds-9045346_1280.jpg');
+            background-size: cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+        }
+        
+        .welcome-text {
+            max-width: 90%;
+            max-height: 90%;
+            padding: 25px;
+            background: rgba(42, 26, 15, 0.7);
+            border-radius: 8px;
+            border: 1px solid var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            overflow: auto;
+        }
+        
+        .welcome-text h1 {
+            font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+            margin-bottom: 0.8em;
+            font-weight: normal;
+            letter-spacing: 2px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--primary-gold);
+            padding-bottom: 10px;
+        }
+        
+        .welcome-text p {
+            font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+            line-height: 1.5;
+            margin-bottom: 1em;
+        }
+        
+        .welcome-text .disclaimer {
+            font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+            font-style: italic;
+            color: var(--light-gold);
+            border-top: 1px dashed var(--primary-gold);
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+        
+        .welcome-text .quote {
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            text-align: center;
+            font-style: italic;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(26, 15, 7, 0.5);
+            border-radius: 4px;
+        }
+        
+        /* Right Pane - Content */
+        .content-pane {
+            flex: 1;
+            background: 
+                linear-gradient(135deg, var(--medium-brown) 0%, var(--dark-brown) 100%);
+            padding: clamp(20px, 3vw, 30px);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -5px 0px 25px rgba(0, 0, 0, 0.7);
+            z-index: 3;
+            overflow: hidden;
+            min-width: 0;
+        }
+        
+        .content-pane::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/parchment.png');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .logo {
+            font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+            margin-bottom: clamp(20px, 3vw, 30px);
+            text-align: center;
+            border-bottom: 2px solid var(--primary-gold);
+            padding-bottom: 10px;
+            letter-spacing: 3px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        
+        .logo::after {
+            content: '✞';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7em;
+            opacity: 0.7;
+        }
+        
+        .access-form-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .form-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .quote-form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background: rgba(26, 15, 7, 0.4);
+            border-radius: 8px;
+            border: 1px solid var(--primary-gold);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .quote-form-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .quote-form h2 {
+            font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+            margin-bottom: 15px;
+            font-weight: normal;
+            text-align: center;
+        }
+        
+        .quote-form label {
+            display: block;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            line-height: 1.4;
+        }
+        
+        .quote-form .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .quote-form input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            background: rgba(201, 168, 122, 0.1);
+            border: 1px solid var(--primary-gold);
+            color: var(--light-gold);
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .quote-form input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(201, 168, 122, 0.5);
+            background: rgba(201, 168, 122, 0.15);
+        }
+        
+        .quote-form button {
+            width: 100%;
+            padding: 12px;
+            background: var(--dark-brown);
+            color: var(--primary-gold);
+            border: 1px solid var(--primary-gold);
+            cursor: pointer;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-form button:hover {
+            background: var(--primary-gold);
+            color: var(--dark-brown);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .quote-form button:active {
+            transform: translateY(0);
+        }
+        
+        .quote-form button::after {
+            content: '➤';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+        
+        .quote-form button:hover::after {
+            right: 8px;
+        }
+        
+        .login-form {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            border-top: 2px solid var(--primary-gold);
+            padding-top: 20px;
+            animation: fadeIn 0.5s ease;
+            overflow: hidden;
+        }
+        
+        .login-form-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-form h2 {
+            font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+            margin-bottom: 20px;
+            font-weight: normal;
+            text-align: center;
+            position: relative;
+        }
+        
+        .login-form h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--primary-gold);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            background: rgba(201, 168, 122, 0.1);
+            border: 1px solid var(--primary-gold);
+            color: var(--light-gold);
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(201, 168, 122, 0.5);
+            background: rgba(201, 168, 122, 0.15);
+        }
+        
+        .form-group i {
+            position: absolute;
+            right: 12px;
+            top: 38px;
+            color: var(--primary-gold);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 1vw, 1rem);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: var(--primary-gold);
+            border: 1px solid var(--primary-gold);
+            cursor: pointer;
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-gold);
+            color: var(--dark-brown);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .footer {
+            margin-top: 15px;
+            font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+            text-align: center;
+            color: #7a6650;
+            border-top: 1px solid #7a6650;
+            padding-top: 10px;
+            flex-shrink: 0;
+        }
+        
+        .footer a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+            color: var(--light-gold);
+        }
+        
+        .attribution {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 10px;
+            color: #7a6650;
+        }
+        
+        .attribution a {
+            color: var(--primary-gold);
+            text-decoration: none;
+        }
+        
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+        
+        .message {
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+        }
+        
+        .error {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--error-gold);
+            color: var(--error-gold);
+        }
+        
+        .success {
+            background: rgba(74, 124, 89, 0.2);
+            border: 1px solid var(--success-green);
+            color: var(--success-green);
+        }
+        
+        .info {
+            background: rgba(201, 168, 122, 0.2);
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+        }
+        
+        .hint {
+            font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+            color: #7a6650;
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .background-pane {
+                flex: 0.8;
+                min-height: 30vh;
+            }
+            
+            .welcome-text {
+                max-width: 95%;
+                max-height: 90%;
+                padding: 15px;
+            }
+            
+            .content-pane {
+                flex: 1;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .quote-form, .login-form {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .welcome-text p, .welcome-text .disclaimer {
+                margin-bottom: 0.5em;
+            }
+            
+            .quote-form, .login-form {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Pane with Background -->
+        <div class="background-pane">
+            <div class="welcome-text">
+                <h1>Archivum Apostolicum Vaticanum</h1>
+                <p>Welcome to the Digital Access Portal of the Vatican Apostolic Archives. This gateway provides accredited scholars with secure access to our digital repository of historical documents.</p>
+                <p>All access is logged, monitored, and subject to the regulations of the Holy See. Unauthorized use is strictly prohibited.</p>
+                <div class="disclaimer">
+                    <p><strong>Artistic Expression Disclaimer:</strong> This is a fictional representation created for artistic and educational purposes. It is not affiliated with nor meant to disrespect the Holy See in any way.</p>
+                    <p>For more insight into the creator's spiritual journey, please visit: <a href="https://scriptorium.mahen-mahindaratne.online/" style="color: var(--light-gold)"; target="_blank";>Scriptorium Ex Animo</a></p>
+                </div>
+                <div class="quote">
+                    <p><i>"Vis videre Deum? Habes unde videas. Deus in ipsa mente est."</i></p>
+                </div>
+                <div class="attribution">
+                    <p>Image by <a href="https://pixabay.com/users/indirex-33908187/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=9045346">carmen dominguez</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=9045346">Pixabay</a></p>
+                </div>
+            </div>
+        </div>
 
+        <!-- Right Pane with Content -->
+        <div class="content-pane">
+            <div class="logo">ARCHIVORUM VATICANORUM</div>
+
+            <div class="access-form-container">
+                <div class="form-section">
+                    <!-- Step 1: Thematic Challenge -->
+                    <div class="quote-form" id="quoteChallenge">
+                        <div class="quote-form-content">
+                            <h2>Scholar Verification</h2>
+                            <p>To proceed, please verify your scholarly intent by providing the biblical reference (Book Chapter:Verse) for the quotation:</p>
+                            <label for="biblicalReference"><em>"Hitherto shalt thou come, but no further, and here shall thy proud waves be stayed?"</em></label>
+                            <div class="input-group">
+                                <input type="text" id="biblicalReference" placeholder="e.g., Genesis 1:1">
+                            </div>
+                            <button onclick="checkReference()">
+                                <span>Submit Reference</span>
+                            </button>
+                            <div id="errorMessage" class="message error">
+                                <i class="fas fa-exclamation-circle"></i> Incorrect reference. Please consult the sacred texts.
+                            </div>
+                            <div class="hint">
+                                Hint: This passage is from the Book of Job, where God speaks of setting boundaries for the sea.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Login Form (Initially Hidden) -->
+                    <form class="login-form" id="loginForm" onsubmit="event.preventDefault(); attemptLogin();">
+                        <div class="login-form-content">
+                            <h2>Scholar Login</h2>
+                            <div class="form-group">
+                                <label for="username">Institution / Username</label>
+                                <input type="text" id="username" required>
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Passphrase</label>
+                                <input type="password" id="password" required>
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <span>REQUEST ACCESS</span>
+                            </button>
+                            <div id="loginMessage" class="message info"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer">
+                &copy; 2025 Mahen Mahindaratne. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkReference() {
+            const userInput = document.getElementById('biblicalReference').value.trim().toLowerCase();
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Correct answers with more variations
+            const correctAnswers = [
+                'job 38:11', 'job 38,11', 'job38:11', 'job38,11',
+                'job 38:10-11', 'job 38:10,11', 'job38:10-11', 'job38:10,11',
+                'job 38:11-12', 'job 38:11,12', 'job38:11-12', 'job38:11,12'
+            ];
+
+            if (correctAnswers.includes(userInput)) {
+                // Success! Show the login form.
+                document.getElementById('quoteChallenge').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'flex';
+                errorMessage.style.display = 'none';
+                
+                // Add success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'message success';
+                successMessage.innerHTML = '<i class="fas fa-check-circle"></i> Reference verified. You may now proceed with login.';
+                document.querySelector('.login-form-content').prepend(successMessage);
+                successMessage.style.display = 'block';
+            } else {
+                // Show error message.
+                errorMessage.style.display = 'block';
+                
+                // Shake animation for error
+                document.getElementById('biblicalReference').style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    document.getElementById('biblicalReference').style.animation = '';
+                }, 500);
+            }
+        }
+
+        function attemptLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginMessage = document.getElementById('loginMessage');
+            
+            // Simple validation
+            if (!username || !password) {
+                loginMessage.textContent = 'Please fill in all required fields.';
+                loginMessage.className = 'message error';
+                loginMessage.style.display = 'block';
+                return;
+            }
+            
+            // This is a simulation, so no real login happens.
+            loginMessage.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Access request for '${username}' received. Credentials are being verified by the Prefect's office. This process may take several days.`;
+            loginMessage.className = 'message info';
+            loginMessage.style.display = 'block';
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                loginMessage.innerHTML = `<i class="fas fa-check-circle"></i> Request submitted successfully. You will receive notification via papal courier once your access is approved.`;
+                loginMessage.className = 'message success';
+                
+                // Clear form
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            }, 2000);
+        }
+        
+        // Add shake animation for errors
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Allow Enter key to submit the reference form
+        document.getElementById('biblicalReference').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkReference();
+            }
+        });
+        
+        // Allow Enter key to submit the login form
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                attemptLogin();
+            }
+        });
+        
+        // Ensure the page fits in viewport on load and resize
+        window.addEventListener('load', fitToViewport);
+        window.addEventListener('resize', fitToViewport);
+        
+        function fitToViewport() {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        }
+    </script>
+</body>
+</html>
