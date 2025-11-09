@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advent Christmas Countdown</title>
+    <style>
+        :root {
+            --glass-blue: rgba(26, 35, 126, 0.7);
+            --glass-purple: rgba(74, 20, 140, 0.7);
+            --glass-red: rgba(183, 28, 28, 0.7);
+            --glass-gold: rgba(255, 214, 0, 0.7);
+            --glass-white: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background: url('/media/church-windows-2217785_1280.jpg') center/cover no-repeat fixed;
+        }
+        
+        .glass-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        
+        header {
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: var(--glass-white);
+            border-radius: 15px;
+            backdrop-filter: blur(1px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #4a148c;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-family: 'Georgia', serif;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #1a237e;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.);
+            padding: 10px 15px;
+            border-radius: 10px;
+            min-width: 80px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+        }
+        
+        .countdown-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a148c;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #1a237e;
+        }
+        
+        .music-controls {
+            margin: 20px 0;
+        }
+        
+        .music-controls button {
+            padding: 10px 20px;
+            margin: 0 8px;
+            border: none;
+            border-radius: 8px;
+            background: var(--glass-red);
+            color: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(5px);
+        }
+        
+        .music-controls button:hover {
+            background: rgba(255, 214, 0, 0.7);
+            color: #4a148c;
+            transform: scale(1.05);
+        }
+        
+        .clock-status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-weight: bold;
+            background: var(--glass-white);
+            border: 1px solid var(--glass-border);
+            color: #1a237e;
+            backdrop-filter: blur(5px);
+        }
+        
+        .calendar-message {
+            padding: 25px;
+            margin: 20px 0;
+            background: var(--glass-white);
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            backdrop-filter: blur(1px);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #1a237e;
+        }
+
+        .calendar-message h3 {
+            color: #4a148c;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-family: 'Georgia', serif;
+            text-align: center;
+        }
+
+        .calendar-message p {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .candle {
+            width: 45px;
+            height: 90px;
+            background: rgba(204, 204, 204, 0.7);
+            border-radius: 22px;
+            position: relative;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .candle.lit {
+            background: linear-gradient(to bottom, rgba(255, 214, 0, 0.8) 0%, rgba(255, 215, 0, 0.6) 100%);
+            box-shadow: 0 0 25px rgba(255, 214, 0, 0.5);
+            animation: flicker 3s infinite;
+        }
+        
+        .candle.rose {
+            background: rgba(183, 28, 28, 0.7);
+        }
+        
+        .candle.rose.lit {
+            background: linear-gradient(to bottom, rgba(255, 107, 107, 0.8) 0%, rgba(183, 28, 28, 0.6) 100%);
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.5);
+        }
+        
+        .calendar-grid-container {
+           max-width: 800px;
+           margin: 0 auto;
+           text-align: center;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            background: var(--glass-white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--glass-border);
+            font-weight: bold;
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            position: relative;
+            color: #1a237e;
+        }
+        
+        .calendar-day:hover {
+            transform: scale(1.08);
+            border-color: rgba(255, 214, 0, 0.7);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .calendar-day.available {
+            background: rgba(255, 214, 0, 0.3);
+            cursor: pointer;
+        }
+        
+        .calendar-day.available.opened::after {
+            content: "✓";
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: #4a148c;
+            font-size: 1rem;
+        }
+        
+        .calendar-day.today {
+            background: linear-gradient(135deg, rgba(183, 28, 28, 0.7) 0%, rgba(255, 107, 107, 0.6) 100%);
+            color: white;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            border: 2px solid rgba(255, 214, 0, 0.7);
+        }
+        
+        .day-content {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--glass-white);
+            color: #1a237e;
+            border-radius: 20px;
+            text-align: left;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .day-content.active {
+            display: block;
+        }
+        
+        .prayer {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-left: 5px solid rgba(183, 28, 28, 0.7);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .latin {
+            font-family: 'Times New Roman', serif;
+            color: #4a148c;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .global-wonder {
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.7) 0%, rgba(74, 20, 140, 0.7) 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .footer {
+            background: rgba(26, 35, 126, 0.8);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 2px solid rgba(255, 214, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .footer p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+        
+        .footer .copyright {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .attribution {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            text-align: center;
+            color: white;
+        }
+        
+        .attribution a {
+            color: rgba(255, 214, 0, 0.9);
+            text-decoration: none;
+        }
+        
+        .attribution a:hover {
+            text-decoration: underline;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        .magic-sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 214, 0, 0.8);
+            border-radius: 50%;
+            animation: sparkle 3s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .advent-wreath {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 600px) {
+            .calendar-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .advent-wreath {
+                gap: 20px;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+                padding: 8px 10px;
+            }
+            
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+            
+            .calendar-message {
+                padding: 20px;
+                font-size: 1.1rem;
+            }
+            
+            .attribution {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                margin-top: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Glass Overlay -->
+    <div class="glass-overlay"></div>
+    
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="./media/silent-night-183017.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="container">
+        <header>
+            <h1 id="pageTitle">Advent Christmas Countdown</h1>
+            <div class="subtitle" id="pageSubtitle">A Scriptural Journey to Christmas</div>
+            
+            <div class="countdown-timer" id="countdownTimer">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+            
+            <div class="music-controls">
+                <button onclick="playMusic()">🎵 Play Music</button>
+                <button onclick="pauseMusic()">⏸️ Pause</button>
+                <button onclick="toggleMute()">🔇 Mute</button>
+            </div>
+            
+            <div id="clockStatus" class="clock-status"></div>
+            <div id="currentDate"></div>
+        </header>
+        
+        <div class="calendar-message" id="calendarMessage">
+            <h3>🎄 Advent Christmas Countdown</h3>
+            <p>The spiritual journey to Christmas begins <strong>November 30, 2025</strong></p>
+            <p>Each day from December 1st to Christmas Eve, discover scriptural reflections and prayers!</p>
+        </div>
+        
+        <div class="advent-wreath" id="adventWreath">
+            <!-- Candles will be populated by JavaScript -->
+        </div>
+        
+        <div class="calendar-grid-container">
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar days will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="day-content" id="dayContent">
+            <!-- Daily content will be loaded here -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Advent Christmas Countdown</p>
+        <p>A scriptural journey to the celebration of Christ's birth</p>
+        <p class="copyright">© Mahen Mahindaratne 2025. All rights reserved.</p>
+    </footer>
+
+    <div class="attribution">
+        Background by <a href="https://pixabay.com/users/noname_13-2364555/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2217785">NoName_13</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2217785">Pixabay</a>
+    </div>
+
+    <script>
+    // Global variable to store advent data
+    let adventData = {};
+    let backgroundMusic = document.getElementById('backgroundMusic');
+    let openedDays = JSON.parse(localStorage.getItem('openedDays')) || [];
+    
+    // Load JSON data from external file
+    async function loadAdventData() {
+        try {
+            const response = await fetch('data/advent-data.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            adventData = await response.json();
+            
+            // Initialize the calendar after data is loaded
+            createSparkles();
+            startBackgroundMusic();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            initAdventCalendar();
+        } catch (error) {
+            console.error('Error loading Advent data:', error);
+            document.getElementById('clockStatus').textContent = "Error loading Christmas magic";
+            // Fallback to default data or show error message
+            loadFallbackData();
+        }
+    }
+
+    // Fallback data in case JSON fails to load
+    function loadFallbackData() {
+        adventData = {
+            "adventConfig": {
+                "startDate": "2025-11-30",
+                "endDate": "2025-12-24",
+                "title": "Advent Christmas Countdown",
+                "subtitle": "A Scriptural Journey to Christmas"
+            },
+            "dailyContent": {
+                "1": {
+                    "title": "First Sunday of Advent - The Hope Candle",
+                    "prayer": "Rorate caeli desuper, et nubes pluant iustum: aperiatur terra, et germinet Salvatorem.",
+                    "prayerTranslation": "Drop down dew, ye heavens, from above, and let the clouds rain the just: let the earth be opened and bud forth a Saviour.",
+                    "scripture": "Isaiah 64:1 - Oh, that you would rend the heavens and come down, that the mountains would tremble before you!",
+                    "reflection": "As we light our first candle, we remember the hope of Israel for the coming Messiah. This hope sustains us as we await Christ's coming in our own hearts.",
+                    "globalWonder": "🌟 The hope of Christ's coming unites believers across all nations and cultures"
+                }
+                // ... include minimal fallback data for key days
+            }
+        };
+        initAdventCalendar();
+    }
+    
+    // Music controls
+    function playMusic() {
+        backgroundMusic.play().catch(e => console.log('Audio play failed:', e));
+    }
+    
+    function pauseMusic() {
+        backgroundMusic.pause();
+    }
+    
+    function toggleMute() {
+        backgroundMusic.muted = !backgroundMusic.muted;
+    }
+    
+    // Auto-start music gently
+    function startBackgroundMusic() {
+        if (!backgroundMusic) return;
+        backgroundMusic.volume = 0.3;
+        // Wait a moment before trying to play
+        setTimeout(() => {
+            backgroundMusic.play().catch(e => {
+                console.log('Auto-play prevented, user interaction required');
+            });
+        }, 1000);
+    }
+    
+    // Create magical sparkles
+    function createSparkles() {
+        for (let i = 0; i < 20; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'magic-sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(sparkle);
+        }
+    }
+    
+    // Update countdown timer
+    function updateCountdown() {
+        const now = new Date();
+        const christmas = new Date(now.getFullYear(), 11, 25); // December 25
+        
+        // If Christmas has passed this year, set for next year
+        if (now > christmas) {
+            christmas.setFullYear(christmas.getFullYear() + 1);
+        }
+        
+        const diff = christmas - now;
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+    
+    function checkSystemClock() {
+        const statusElement = document.getElementById('clockStatus');
+        const dateElement = document.getElementById('currentDate');
+        const messageElement = document.getElementById('calendarMessage');
+        
+        const now = new Date();
+        dateElement.textContent = `Today: ${now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+        
+        const currentAdventDay = calculateAdventDay();
+        if(currentAdventDay > 0) {
+            statusElement.textContent = `Day ${currentAdventDay} of Christmas Countdown`;
+            if (messageElement) messageElement.style.display = 'none';
+        } else if(currentAdventDay === -1) {
+            statusElement.textContent = "Christmas countdown begins soon!";
+            if (messageElement) messageElement.style.display = 'block';
+        } else {
+            statusElement.textContent = "Christmas celebration has ended";
+            if (messageElement) {
+                messageElement.innerHTML = `
+                    <h3>🎅 Christmas Celebration Complete</h3>
+                    <p>Thank you for joining our spiritual Christmas countdown!</p>
+                    <p>The celebration for ${now.getFullYear()-1} has ended, but Christ's presence remains with us always.</p>
+                `;
+            }
+        }
+        
+        // Update page title from JSON
+        if (adventData.adventConfig) {
+            document.getElementById('pageTitle').textContent = adventData.adventConfig.title || "Advent Christmas Countdown";
+            document.getElementById('pageSubtitle').textContent = adventData.adventConfig.subtitle || "A Scriptural Journey to Christmas";
+        }
+    }
+    
+    function calculateAdventDay() {
+        const now = new Date();
+        const todayReset = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        
+        // Use actual Advent start date (November 30)
+        const adventStart = new Date(now.getFullYear(), 10, 30); // Month is 0-indexed, so 10 = November
+        const christmasEve = new Date(now.getFullYear(), 11, 24); // December 24
+        
+        if (todayReset < adventStart) return -1;
+        if (todayReset > christmasEve) return -2;
+        
+        const diffTime = todayReset - adventStart;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays + 1; // +1 because we start counting from Day 1 on Nov 30
+    }
+    
+    function createAdventWreath(currentDay) {
+        const wreath = document.getElementById('adventWreath');
+        if (!wreath) return;
+        wreath.innerHTML = '';
+        
+        const candles = [
+            { class: 'candle', week: 1, label: 'Hope' },
+            { class: 'candle', week: 2, label: 'Peace' },
+            { class: 'candle rose', week: 3, label: 'Joy' },
+            { class: 'candle', week: 4, label: 'Love' }
+        ];
+        
+        candles.forEach((candle, index) => {
+            const candleElement = document.createElement('div');
+            candleElement.className = candle.class;
+            candleElement.title = candle.label;
+            
+            const currentWeek = Math.min(Math.ceil(currentDay / 7), 4);
+            if (index < currentWeek) {
+                candleElement.classList.add('lit');
+            }
+            
+            wreath.appendChild(candleElement);
+        });
+        
+        const description = document.createElement('div');
+        description.style.marginTop = '15px';
+        description.style.fontSize = '1.1rem';
+        description.style.color = '#1a237e';
+        description.textContent = `Week ${Math.min(Math.ceil(currentDay / 7), 4)} of Advent`;
+        wreath.appendChild(description);
+    }
+    
+    function createCalendarGrid() {
+        const grid = document.getElementById('calendarGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        
+        const totalDays = 24;
+        const currentAdventDay = calculateAdventDay();
+        
+        for (let day = 1; day <= totalDays; day++) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            dayElement.textContent = day;
+            
+            if (day <= currentAdventDay && currentAdventDay > 0) {
+                dayElement.classList.add('available');
+                dayElement.addEventListener('click', () => showDayContent(day));
+                
+                // Mark opened days
+                if (openedDays.includes(day)) {
+                    dayElement.classList.add('opened');
+                }
+            }
+            
+            if (day === currentAdventDay) {
+                dayElement.classList.add('today');
+            }
+            
+            grid.appendChild(dayElement);
+        }
+    }
+    
+    function showDayContent(day) {
+        // Add to opened days if not already there
+        if (!openedDays.includes(day)) {
+            openedDays.push(day);
+            localStorage.setItem('openedDays', JSON.stringify(openedDays));
+            
+            // Update the calendar day to show it's been opened
+            const dayElements = document.querySelectorAll('.calendar-day');
+            if (dayElements[day-1]) {
+                dayElements[day-1].classList.add('opened');
+            }
+        }
+        
+        const contentElement = document.getElementById('dayContent');
+        if (!contentElement) return;
+        
+        const content = adventData.dailyContent?.[day] || getDefaultContent(day);
+        
+        contentElement.innerHTML = `
+            <h2>${content.title}</h2>
+            ${content.globalWonder ? `<div class="global-wonder">${content.globalWonder}</div>` : ''}
+            <div class="prayer">
+                <strong>Prayer (Latin):</strong><br>
+                <span class="latin">${content.prayer}</span>
+                <br><br>
+                <strong>English Translation:</strong><br>
+                ${content.prayerTranslation}
+            </div>
+            <div style="margin: 20px 0;">
+                <strong>Scripture:</strong><br>${content.scripture}
+            </div>
+            <div>
+                <strong>Reflection:</strong><br>${content.reflection}
+            </div>
+        `;
+        
+        contentElement.classList.add('active');
+        
+        // Scroll to the content
+        contentElement.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function getDefaultContent(day) {
+        return {
+            title: `Day ${day} of Advent`,
+            prayer: "Veni, Domine Iesu!",
+            prayerTranslation: "Come, Lord Jesus!",
+            scripture: "Prepare the way of the Lord, make straight his paths...",
+            reflection: `As we continue our Advent journey, we prepare our hearts for the coming of Christ. Each day brings us closer to the celebration of His birth.`,
+            globalWonder: "🌟 Christians around the world prepare their hearts during this holy season"
+        };
+    }
+    
+    function initAdventCalendar() {
+        checkSystemClock();
+        const currentAdventDay = calculateAdventDay();
+
+        if (currentAdventDay === -1) {
+            document.getElementById('clockStatus').textContent += " - The Advent season hasn't started yet";
+            document.getElementById('calendarGrid').innerHTML = '<div class="calendar-message"><h3>Coming Soon!</h3><p>The Advent calendar will begin on November 30, 2025</p></div>';
+        } else if (currentAdventDay === -2) {
+            document.getElementById('clockStatus').textContent += " - The Advent journey has ended";
+            document.getElementById('calendarGrid').innerHTML = '<div class="calendar-message"><h3>Christmas Celebration Complete</h3><p>Thank you for celebrating with us! See you next year for more spiritual preparation.</p></div>';
+        } else {
+            createAdventWreath(currentAdventDay);
+            createCalendarGrid();
+    
+            if (currentAdventDay > 0) {
+                setTimeout(() => {
+                    showDayContent(currentAdventDay);
+                }, 500);
+            }
+        }
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', loadAdventData);
+    </script>
+</body>
+</html>

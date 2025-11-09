@@ -1,0 +1,202 @@
+{
+    "adventConfig": {
+        "startDate": "2025-11-30",
+        "endDate": "2025-12-24",
+        "title": "Advent Christmas Countdown",
+        "subtitle": "A Scriptural Journey to Christmas"
+    },
+    "dailyContent": {
+        "1": {
+            "title": "First Sunday of Advent - The Hope Candle",
+            "prayer": "Rorate caeli desuper, et nubes pluant iustum: aperiatur terra, et germinet Salvatorem.",
+            "prayerTranslation": "Drop down dew, ye heavens, from above, and let the clouds rain the just: let the earth be opened and bud forth a Saviour.",
+            "scripture": "Isaiah 64:1 - Oh, that you would rend the heavens and come down, that the mountains would tremble before you!",
+            "reflection": "As we light our first candle, we remember the hope of Israel for the coming Messiah. This hope sustains us as we await Christ's coming in our own hearts.",
+            "globalWonder": "🌟 The hope of Christ's coming unites believers across all nations and cultures"
+        },
+        "2": {
+            "title": "December 1st - The Promise of a Savior",
+            "prayer": "Excita, quaesumus, Domine, potentiam tuam, et veni: ut ab imminentibus peccatorum nostrorum periculis, te mereamur protegente eripi, te liberante salvari.",
+            "prayerTranslation": "Stir up your power, O Lord, and come: that by your protection we may be rescued from the threatening dangers of our sins and saved by your deliverance.",
+            "scripture": "Isaiah 40:3-5 - A voice of one calling: 'Prepare the way for the LORD in the wilderness; make straight in the desert a highway for our God.'",
+            "reflection": "John the Baptist's call to prepare the way reminds us to clear the obstacles in our own hearts that prevent Christ from dwelling fully within us.",
+            "globalWonder": "🕊️ Christians worldwide prepare their hearts during Advent, creating a global spiritual anticipation"
+        },
+        "3": {
+            "title": "December 2nd - The Annunciation",
+            "prayer": "Ave Maria, gratia plena, Dominus tecum: benedicta tu in mulieribus, et benedictus fructus ventris tui, Iesus.",
+            "prayerTranslation": "Hail Mary, full of grace, the Lord is with thee: blessed art thou among women, and blessed is the fruit of thy womb, Jesus.",
+            "scripture": "Luke 1:26-38 - The angel Gabriel was sent from God to a town of Galilee called Nazareth, to a virgin betrothed to a man named Joseph.",
+            "reflection": "Mary's 'yes' to God changed history. Her humble acceptance teaches us that God's plans often come in unexpected ways.",
+            "globalWonder": "👼 The angel's message to Mary echoes through time, reminding all of God's loving plan for humanity"
+        },
+        "4": {
+            "title": "December 3rd - The Visitation",
+            "prayer": "Magnificat anima mea Dominum, et exsultavit spiritus meus in Deo salutari meo.",
+            "prayerTranslation": "My soul magnifies the Lord, and my spirit rejoices in God my Savior.",
+            "scripture": "Luke 1:39-45 - Mary set out and traveled to the hill country in haste to a town of Judah, where she entered the house of Zechariah.",
+            "reflection": "Mary's visit to Elizabeth shows us the importance of Christian community and sharing our spiritual joys with one another.",
+            "globalWonder": "🤝 The bond between Mary and Elizabeth reflects the unity of all believers in Christ"
+        },
+        "5": {
+            "title": "December 4th - The Magnificat",
+            "prayer": "Fecit potentiam in brachio suo; dispersit superbos mente cordis sui.",
+            "prayerTranslation": "He has shown might with his arm; he has scattered the proud in the conceit of their heart.",
+            "scripture": "Luke 1:46-55 - And Mary said: 'My soul proclaims the greatness of the Lord; my spirit rejoices in God my savior.'",
+            "reflection": "Mary's song reminds us that God exalts the humble and fills the hungry with good things. His mercy extends to all generations.",
+            "globalWonder": "🎵 The Magnificat is sung daily in churches worldwide, uniting Christians in praise"
+        },
+        "6": {
+            "title": "December 5th - John the Baptist's Birth",
+            "prayer": "Tu, puer, propheta Altissimi vocaberis: praeibis enim ante faciem Domini parare vias eius.",
+            "prayerTranslation": "And you, child, will be called prophet of the Most High, for you will go before the Lord to prepare his ways.",
+            "scripture": "Luke 1:57-66 - When the time arrived for Elizabeth to have her child she gave birth to a son.",
+            "reflection": "John's birth to elderly parents reminds us that nothing is impossible with God. He prepares the way for Christ in unexpected circumstances.",
+            "globalWonder": "👶 The miracle of John's birth points to God's power to bring life where there seems to be none"
+        },
+        "7": {
+            "title": "December 6th - St. Nicholas Day",
+            "prayer": "Deus, qui beatum Nicolaum Pontificem innumeris decorasti miraculis: tribue, quaesumus; ut eius meritis et precibus a gehemnalibus incendii liberemur.",
+            "prayerTranslation": "O God, who adorned the Blessed Bishop Nicholas with countless miracles: grant, we beseech you, that by his merits and prayers we may be delivered from the fires of hell.",
+            "scripture": "Matthew 6:19-21 - Do not store up for yourselves treasures on earth, where moth and decay destroy, and thieves break in and steal.",
+            "reflection": "St. Nicholas embodied Christian charity. His generosity reminds us that true wealth lies in what we give, not what we possess.",
+            "globalWonder": "🎁 The spirit of giving inspired by St. Nicholas spans continents and cultures"
+        },
+        "8": {
+            "title": "Second Sunday of Advent - The Peace Candle",
+            "prayer": "Deus, qui conspicis quia ex nostra pravitati affligimur: concede propitius; ut ex adventu Unigeniti tui consolationem recipiamus.",
+            "prayerTranslation": "O God, who see how we are afflicted by our own perversity: mercifully grant that we may be comforted by the advent of your Only Begotten Son.",
+            "scripture": "Isaiah 11:1-10 - But a shoot shall sprout from the stump of Jesse, and from his roots a bud shall blossom.",
+            "reflection": "The peace Christ brings isn't the absence of conflict, but the presence of justice, righteousness, and harmony with God.",
+            "globalWonder": "🕊️ Christ's peace transcends all human divisions, offering reconciliation to the whole world"
+        },
+        "9": {
+            "title": "December 8th - Immaculate Conception",
+            "prayer": "Deus, qui per immaculatam Virginis Conceptionem dignum Filio tuo habitaculum praeparasti: quaesumus; ut qui ex morte eiusdem Filii tui praevista eam ab omni labe praeservasti.",
+            "prayerTranslation": "O God, who by the Immaculate Conception of the Virgin did prepare a worthy dwelling place for your Son: we beseech you that, as by the foreseen death of your Son, you did preserve her from all stain.",
+            "scripture": "Luke 1:28 - And coming to her, he said, 'Hail, favored one! The Lord is with you.'",
+            "reflection": "Mary's preservation from original sin highlights God's power to create vessels of extraordinary grace for his divine purposes.",
+            "globalWonder": "🌹 Mary's unique role in salvation history is celebrated by Christians worldwide"
+        },
+        "10": {
+            "title": "December 9th - The Jesse Tree",
+            "prayer": "Ecce radix Iesse, qui stat in signum populorum, ipsum gentes deprecabuntur.",
+            "prayerTranslation": "Behold the root of Jesse, who stands as an ensign of the people, him the Gentiles shall beseech.",
+            "scripture": "Isaiah 11:10 - On that day, the root of Jesse, set up as a signal for the nations, the Gentiles shall seek out.",
+            "reflection": "The Jesse Tree traces salvation history, reminding us that Christ's coming was prepared through generations of faithful people.",
+            "globalWonder": "🌳 The lineage of Christ connects all believers as part of God's family tree"
+        },
+        "11": {
+            "title": "December 10th - The O Antiphons Begin",
+            "prayer": "O Sapientia, quae ex ore Altissimi prodiisti, attingens a fine usque ad finem, fortiter suaviterque disponens omnia: veni ad docendum nos viam prudentiae.",
+            "prayerTranslation": "O Wisdom, who came from the mouth of the Most High, reaching from end to end and ordering all things mightily and sweetly: come, and teach us the way of prudence.",
+            "scripture": "Proverbs 8:22-31 - The LORD possessed me, the beginning of his ways, the forerunner of his prodigies of long ago.",
+            "reflection": "The O Antiphons express the Church's ancient longing for the Messiah, using rich titles that reveal different aspects of Christ.",
+            "globalWonder": "🎶 The O Antiphons have been sung for centuries, connecting modern Christians with ancient tradition"
+        },
+        "12": {
+            "title": "December 11th - O Adonai",
+            "prayer": "O Adonai, et Dux domus Israel, qui Moysi in igne flammae rubi apparuisti, et ei in Sina legem dedisti: veni ad redimendum nos in brachio extento.",
+            "prayerTranslation": "O Lord and Ruler of the house of Israel, who appeared to Moses in the fire of the burning bush and gave him the law on Sinai: come, and redeem us with an outstretched arm.",
+            "scripture": "Exodus 3:2-6 - There an angel of the LORD appeared to him in fire flaming out of a bush.",
+            "reflection": "Christ is the new Moses who leads us from slavery to sin into the freedom of God's children.",
+            "globalWonder": "🔥 The God who appeared in the burning bush comes to dwell among us in the flesh"
+        },
+        "13": {
+            "title": "December 12th - Our Lady of Guadalupe",
+            "prayer": "Deus, qui sub beatissimae Virginis Mariae singulari praesidio constituisti: praesta, quaesumus; ut, cuius hodie memoriam agimus, eius muniamur auxilio ad pacem.",
+            "prayerTranslation": "O God, who has placed us under the special protection of the most Blessed Virgin Mary: grant, we beseech you, that we may be defended by her help and attain peace.",
+            "scripture": "Revelation 12:1 - A great sign appeared in the sky, a woman clothed with the sun, with the moon under her feet.",
+            "reflection": "Our Lady of Guadalupe shows Mary's maternal care for all peoples, especially the poor and marginalized.",
+            "globalWonder": "🌹 Mary appears as a mother to all nations, speaking every language and embracing every culture"
+        },
+        "14": {
+            "title": "December 13th - O Radix Jesse",
+            "prayer": "O Radix Iesse, qui stas in signum populorum, super quem continebunt reges os suum, quem Gentes deprecabuntur: veni ad liberandum nos, iam noli tardare.",
+            "prayerTranslation": "O Root of Jesse, who stands as a sign for the peoples, before whom kings shall shut their mouths, whom the nations shall seek: come to deliver us, and do not delay.",
+            "scripture": "Isaiah 11:10 - On that day, the root of Jesse, set up as a signal for the nations, the Gentiles shall seek out.",
+            "reflection": "From the seemingly dead stump of Jesse's line comes the flourishing shoot of our salvation.",
+            "globalWonder": "🌱 From one small nation comes salvation for all humanity"
+        },
+        "15": {
+            "title": "Third Sunday of Advent - The Joy Candle",
+            "prayer": "Gaudete in Domino semper: iterum dico, gaudete. Modestia vestra nota sit omnibus hominibus: Dominus prope est.",
+            "prayerTranslation": "Rejoice in the Lord always; again I say, rejoice. Let your moderation be known to all men: The Lord is near.",
+            "scripture": "Philippians 4:4-7 - Rejoice in the Lord always. I shall say it again: rejoice!",
+            "reflection": "Gaudete Sunday reminds us that Christian joy isn't dependent on circumstances but on the nearness of our Savior.",
+            "globalWonder": "😊 The joy of anticipation unites Christians across the globe as Christmas approaches"
+        },
+        "16": {
+            "title": "December 15th - O Clavis David",
+            "prayer": "O Clavis David, et sceptrum domus Israel: qui aperis, et nemo claudit; claudis, et nemo aperit: veni, et educ vinctum de domo carceris, sedentem in tenebris, et umbra mortis.",
+            "prayerTranslation": "O Key of David, and scepter of the house of Israel: who opens and no one shuts, who shuts and no one opens: come, and lead the captive from prison, sitting in darkness and in the shadow of death.",
+            "scripture": "Isaiah 22:22 - I will place the key of the House of David on his shoulder; what he opens, no one will shut, what he shuts, no one will open.",
+            "reflection": "Christ holds the key to our liberation from sin and death, opening for us the gates of eternal life.",
+            "globalWonder": "🔑 The keys of the Kingdom open salvation to people of every nation and tongue"
+        },
+        "17": {
+            "title": "December 16th - O Oriens",
+            "prayer": "O Oriens, splendor lucis aeternae, et sol iustitiae: veni, et illumina sedentes in tenebris, et umbra mortis.",
+            "prayerTranslation": "O Dayspring, splendor of light eternal and sun of justice: come, and enlighten those who sit in darkness and in the shadow of death.",
+            "scripture": "Luke 1:78-79 - Because of the tender mercy of our God by which the daybreak from on high will visit us to shine on those who sit in darkness and death's shadow.",
+            "reflection": "Christ is the true light that darkness cannot overcome, dawning with healing in his wings.",
+            "globalWonder": "☀️ The light of Christ dawns upon every nation, dispelling the darkness of sin"
+        },
+        "18": {
+            "title": "December 17th - O Rex Gentium",
+            "prayer": "O Rex Gentium, et desideratus earum, lapisque angularis, qui facis utraque unum: veni, et salva hominem, quem de limo formasti.",
+            "prayerTranslation": "O King of the Nations, and their desired one, and the cornerstone that makes both one: come, and save man, whom you formed from the slime.",
+            "scripture": "Ephesians 2:14-20 - For he is our peace, he who made both one and broke down the dividing wall of enmity, through his flesh.",
+            "reflection": "Christ is the cornerstone that unites Jew and Gentile, making us one new people in himself.",
+            "globalWonder": "👑 Christ's kingship transcends all earthly powers, uniting people from every tribe and nation"
+        },
+        "19": {
+            "title": "December 18th - O Emmanuel",
+            "prayer": "O Emmanuel, Rex et legifer noster, exspectatio Gentium, et Salvator earum: veni ad salvandum nos, Domine, Deus noster.",
+            "prayerTranslation": "O Emmanuel, our King and Lawgiver, the Expected of the nations and their Saviour: come to save us, O Lord our God.",
+            "scripture": "Isaiah 7:14 - Therefore the Lord himself will give you a sign; the young woman, pregnant and about to bear a son, shall name him Emmanuel.",
+            "reflection": "God is with us - this is the heart of the Christmas mystery. The infinite becomes infant, the eternal enters time.",
+            "globalWonder": "👶 The miracle of Emmanuel - God with us - is celebrated by Christians in every corner of the earth"
+        },
+        "20": {
+            "title": "December 19th - The Genealogy of Jesus",
+            "prayer": "Liber generationis Iesu Christi, filii David, filii Abraham.",
+            "prayerTranslation": "The book of the generation of Jesus Christ, the son of David, the son of Abraham.",
+            "scripture": "Matthew 1:1-17 - The book of the genealogy of Jesus Christ, the son of David, the son of Abraham.",
+            "reflection": "Jesus' genealogy includes saints and sinners, Jews and Gentiles, reminding us that salvation is for all.",
+            "globalWonder": "📜 The family tree of Jesus embraces all humanity in God's saving plan"
+        },
+        "21": {
+            "title": "December 20th - Joseph's Dream",
+            "prayer": "Angelus Domini apparuit in somnis Ioseph, dicens: Ioseph, fili David, noli timere accipere Mariam coniugem tuam: quod enim in ea natum est, de Spiritu Sancto est.",
+            "prayerTranslation": "The angel of the Lord appeared to him in a dream and said, 'Joseph, son of David, do not be afraid to take Mary your wife into your home.'",
+            "scripture": "Matthew 1:18-25 - This is how the birth of Jesus Christ came about.",
+            "reflection": "Joseph's faithful obedience, despite his confusion, shows us how to trust God's mysterious plans.",
+            "globalWonder": "💭 God speaks to the humble heart, guiding ordinary people to participate in extraordinary plans"
+        },
+        "22": {
+            "title": "Fourth Sunday of Advent - The Love Candle",
+            "prayer": "Ecce ancilla Domini: fiat mihi secundum verbum tuum.",
+            "prayerTranslation": "Behold the handmaid of the Lord: be it done unto me according to thy word.",
+            "scripture": "Luke 1:26-38 - Mary said, 'Behold, I am the handmaid of the Lord. May it be done to me according to your word.'",
+            "reflection": "Mary's loving surrender to God's will enables the Incarnation. Her 'yes' opens the way for our salvation.",
+            "globalWonder": "❤️ Mary's loving obedience brings the Savior to all humanity"
+        },
+        "23": {
+            "title": "December 23rd - The Visitation Revisited",
+            "prayer": "Et unde hoc mihi ut veniat mater Domini mei ad me?",
+            "prayerTranslation": "And how does this happen to me, that the mother of my Lord should come to me?",
+            "scripture": "Luke 1:39-45 - When Elizabeth heard Mary's greeting, the infant leaped in her womb.",
+            "reflection": "Even in the womb, John recognizes Jesus and leaps for joy. The presence of Christ brings joy to all who encounter him.",
+            "globalWonder": "👶 The unborn John bears witness to the presence of the unborn Savior"
+        },
+        "24": {
+            "title": "Christmas Eve - The Night of Wonder",
+            "prayer": "Hodie scietis quia veniet Dominus, et mane videbitis gloriam eius.",
+            "prayerTranslation": "Today you will know that the Lord is coming, and in the morning you will see his glory.",
+            "scripture": "Luke 2:1-7 - In those days a decree went out from Caesar Augustus that the whole world should be enrolled.",
+            "reflection": "In the stillness of this holy night, heaven touches earth, and the Word becomes flesh to dwell among us.",
+            "globalWonder": "🌟 Tonight, Christians around the world keep vigil, awaiting the celebration of our Savior's birth"
+        }
+    }
+}
